@@ -251,6 +251,7 @@ class Notifier
      */
     public function buildNotice($exc)
     {
+        $originalException = $exc;
         $errors = [];
         while (!empty($exc)) {
             $err = [
@@ -291,11 +292,11 @@ class Notifier
         }
 
         // exception details - if available
-        if (property_exists($exc, 'details')) {
+        if (property_exists($originalException, 'details')) {
             if (!isset($notice['params'])) {
                 $notice['params'] = [];
             }
-            $notice['params']['_details'] = $exc->details;
+            $notice['params']['_details'] = $originalException->details;
         }
 
         if (!empty($_SESSION)) {
