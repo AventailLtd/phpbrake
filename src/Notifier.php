@@ -284,6 +284,15 @@ class Notifier
         if (!empty($_REQUEST)) {
             $notice['params'] = $_REQUEST;
         }
+
+        // exception details - if available
+        if (property_exists($exc, 'details')) {
+            if (!isset($notice['params'])) {
+                $notice['params'] = [];
+            }
+            $notice['params']['_details'] = $exc->details;
+        }
+
         if (!empty($_SESSION)) {
             $notice['session'] = $_SESSION;
         }
